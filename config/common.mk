@@ -31,6 +31,7 @@ PRODUCT_COPY_FILES += \
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
+    vendor/cm/prebuilt/common/bin/fix_permissions:system/bin/fix_permissions \
     vendor/cm/prebuilt/common/bin/backuptool.sh:system/bin/backuptool.sh \
     vendor/cm/prebuilt/common/bin/backuptool.functions:system/bin/backuptool.functions \
     vendor/cm/prebuilt/common/bin/50-cm.sh:system/addon.d/50-cm.sh
@@ -51,7 +52,6 @@ PRODUCT_COPY_FILES += \
     vendor/cm/prebuilt/common/bin/handle_compcache:system/bin/handle_compcache
 
 PRODUCT_COPY_FILES +=  \
-    vendor/cm/proprietary/RomManager.apk:system/app/RomManager.apk \
     vendor/cm/proprietary/Term.apk:system/app/Term.apk \
     vendor/cm/proprietary/lib/armeabi/libjackpal-androidterm4.so:system/lib/libjackpal-androidterm4.so
 
@@ -146,10 +146,12 @@ endif
 
 ifdef CM_RELEASE
     CM_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)$(PRODUCT_VERSION_DEVICE_SPECIFIC)-$(CM_BUILD)
+    MODVERSION := CyanogenMod-$(CM_VERSION)
 else
     CM_VERSION := $(PRODUCT_VERSION_MAJOR)-$(shell date -u +%Y%m%d)-$(CM_BUILDTYPE)-$(CM_BUILD)$(CM_EXTRAVERSION)
+    MODVERSION := CyanogenMod-$(PRODUCT_VERSION_MAJOR)-$(CM_BUILDTYPE)-$(shell date +%y%m%d)-$(PRODUCT_RELEASE_NAME)$(CM_EXTRAVERSION)
 endif
 
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.cm.version=$(CM_VERSION) \
-  ro.modversion=$(CM_VERSION)
+  ro.modversion=$(MODVERSION)
